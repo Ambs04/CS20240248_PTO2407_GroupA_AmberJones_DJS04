@@ -4,6 +4,14 @@ let page = 1;
 let matches = books;
 
 const starting = document.createDocumentFragment();
+const darkProperty = document.documentElement.style.setProperty(
+  "--color-dark",
+  "255, 255, 255"
+);
+const lightProperty = document.documentElement.style.setProperty(
+  "--color-light",
+  "10, 10, 20"
+);
 
 ///**@typedef {object} - contains all the querySelectors throughout the JS file  */
 
@@ -91,12 +99,12 @@ if (
   window.matchMedia("(prefers-color-scheme: dark)").matches
 ) {
   el.dataSettingsTheme.value = "night";
-  document.documentElement.style.setProperty("--color-dark", "255, 255, 255");
-  document.documentElement.style.setProperty("--color-light", "10, 10, 20");
+  darkProperty; //document.documentElement.style.setProperty("--color-dark", "255, 255, 255");
+  lightProperty; //document.documentElement.style.setProperty("--color-light", "10, 10, 20");
 } else {
   el.dataSettingsTheme.value = "day";
-  document.documentElement.style.setProperty("--color-dark", "10, 10, 20");
-  document.documentElement.style.setProperty("--color-light", "255, 255, 255");
+  lightProperty; //document.documentElement.style.setProperty("--color-dark", "10, 10, 20");
+  darkProperty; //document.documentElement.style.setProperty("--color-light", "255, 255, 255");
 }
 
 el.dataListBtn.innerText = `Show more (${books.length - BOOKS_PER_PAGE})`;
