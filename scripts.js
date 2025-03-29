@@ -208,37 +208,6 @@ el.dataSearchForm.addEventListener("submit", (event) => {
 
 // removed event listener from here with for loop
 
-el.dataListItems.addEventListener("click", (event) => {
-  const pathArray = Array.from(event.path || event.composedPath());
-  let active = null;
-
-  for (const node of pathArray) {
-    if (active) break;
-
-    if (node?.dataset?.preview) {
-      let result = null;
-
-      for (const singleBook of books) {
-        if (result) break;
-        if (singleBook.id === node?.dataset?.preview) result = singleBook;
-      }
-
-      active = result;
-    }
-  }
-
-  if (active) {
-    el.dataListActive.open = true;
-    el.dataListBlur.src = active.image;
-    el.dataListImg.src = active.image;
-    el.dataListTitle.innerText = active.title;
-    el.dataListSubtitle.innerText = `${authors[active.author]} (${new Date(
-      active.published
-    ).getFullYear()})`;
-    el.dataListDesc.innerText = active.description;
-  }
-});
-
 //create object for the query selectors
 //create a function to isolate event listeners
 // document.fragment replace with starting
@@ -294,5 +263,36 @@ function eventListeners() {
 
     el.dataListItems.appendChild(fragment);
     page += 1;
+  });
+
+  el.dataListItems.addEventListener("click", (event) => {
+    const pathArray = Array.from(event.path || event.composedPath());
+    let active = null;
+
+    for (const node of pathArray) {
+      if (active) break;
+
+      if (node?.dataset?.preview) {
+        let result = null;
+
+        for (const singleBook of books) {
+          if (result) break;
+          if (singleBook.id === node?.dataset?.preview) result = singleBook;
+        }
+
+        active = result;
+      }
+    }
+
+    if (active) {
+      el.dataListActive.open = true;
+      el.dataListBlur.src = active.image;
+      el.dataListImg.src = active.image;
+      el.dataListTitle.innerText = active.title;
+      el.dataListSubtitle.innerText = `${authors[active.author]} (${new Date(
+        active.published
+      ).getFullYear()})`;
+      el.dataListDesc.innerText = active.description;
+    }
   });
 }
