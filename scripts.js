@@ -147,7 +147,23 @@ el.dataSearchForm.addEventListener("submit", (event) => {
   const newItems = starting; //document.createDocumentFragment();
 
   for (const { author, id, image, title } of result.slice(0, BOOKS_PER_PAGE)) {
-    createPreview();
+    const element = document.createElement("button");
+    element.classList = "preview";
+    element.setAttribute("data-preview", id);
+
+    element.innerHTML = `
+              <img
+                  class="preview__image"
+                  src="${image}"
+              />
+              
+              <div class="preview__info">
+                  <h3 class="preview__title">${title}</h3>
+                  <div class="preview__author">${authors[author]}</div>
+              </div>
+          `;
+
+    newItems.appendChild(element);
   }
   el.dataListItems.appendChild(newItems);
   el.dataListBtn.disabled = matches.length - page * BOOKS_PER_PAGE < 1;
@@ -197,26 +213,6 @@ function toggleTheme(event) {
       "255, 255, 255"
     );
   }
-}
-
-function createPreview() {
-  const element = document.createElement("button");
-  element.classList = "preview";
-  element.setAttribute("data-preview", id);
-
-  element.innerHTML = `
-            <img
-                class="preview__image"
-                src="${image}"
-            />
-            
-            <div class="preview__info">
-                <h3 class="preview__title">${title}</h3>
-                <div class="preview__author">${authors[author]}</div>
-            </div>
-        `;
-
-  newItems.appendChild(element);
 }
 
 //function containing event listeners
