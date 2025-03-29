@@ -8,7 +8,7 @@ const starting = document.createDocumentFragment();
 ///**@typedef {object} - contains all the querySelectors throughout the JS file  */
 
 const el = {
-  dataSettingsTheme: document.querySelector("[data-setitngs-theme]"),
+  dataSettingsTheme: document.querySelector("[data-settings-theme]"),
   dataListBtn: document.querySelector("[data-list-button]"),
   dataSettingsForm: document.querySelector("[data-settings-form]"),
   dataSearchCancel: document.querySelector("[data-search-cancel]"),
@@ -31,6 +31,8 @@ const el = {
   dataListDesc: document.querySelector("[data-list-description]"),
   dataListMessage: document.querySelector("[data-list-message]"),
 };
+
+eventListeners();
 
 for (const { author, id, image, title } of matches.slice(0, BOOKS_PER_PAGE)) {
   const element = document.createElement("button");
@@ -88,11 +90,11 @@ if (
   window.matchMedia &&
   window.matchMedia("(prefers-color-scheme: dark)").matches
 ) {
-  el.dataSettingsTheme = "night";
+  el.dataSettingsTheme.value = "night";
   document.documentElement.style.setProperty("--color-dark", "255, 255, 255");
   document.documentElement.style.setProperty("--color-light", "10, 10, 20");
 } else {
-  el.dataSettingsTheme = "day";
+  el.dataSettingsTheme.value = "day";
   document.documentElement.style.setProperty("--color-dark", "10, 10, 20");
   document.documentElement.style.setProperty("--color-light", "255, 255, 255");
 }
@@ -109,26 +111,7 @@ el.dataListBtn.innerHTML = `
     })</span>
 `;
 
-el.dataSearchCancel.addEventListener("click", () => {
-  el.dataSearchOverlay.open = false;
-});
-
-el.dataSettingsCancel.addEventListener("click", () => {
-  el.dataSettingsOverlay.open = false;
-});
-
-el.dataHeaderSearch.addEventListener("click", () => {
-  el.dataSearchOverlay.open = true;
-  el.dataSearchTitle.focus();
-});
-
-el.dataHeaderSettings.addEventListener("click", () => {
-  el.dataSettingsOverlay.open = true;
-});
-
-el.dataListClose.addEventListener("click", () => {
-  el.dataListActive.open = false;
-});
+// removed event listeners from here
 
 el.dataSettingsForm.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -223,35 +206,7 @@ el.dataSearchForm.addEventListener("submit", (event) => {
   el.dataSearchOverlay.open = false;
 });
 
-el.dataListBtn.addEventListener("click", () => {
-  const fragment = starting; //document.createDocumentFragment();
-
-  for (const { author, id, image, title } of matches.slice(
-    page * BOOKS_PER_PAGE,
-    (page + 1) * BOOKS_PER_PAGE
-  )) {
-    const element = document.createElement("button");
-    element.classList = "preview";
-    element.setAttribute("data-preview", id);
-
-    element.innerHTML = `
-            <img
-                class="preview__image"
-                src="${image}"
-            />
-            
-            <div class="preview__info">
-                <h3 class="preview__title">${title}</h3>
-                <div class="preview__author">${authors[author]}</div>
-            </div>
-        `;
-
-    fragment.appendChild(element);
-  }
-
-  el.dataListItems.appendChild(fragment);
-  page += 1;
-});
+// removed event listener from here with for loop
 
 el.dataListItems.addEventListener("click", (event) => {
   const pathArray = Array.from(event.path || event.composedPath());
@@ -288,3 +243,56 @@ el.dataListItems.addEventListener("click", (event) => {
 //create a function to isolate event listeners
 // document.fragment replace with starting
 // create function/variable for light and dark mode
+
+function eventListeners() {
+  el.dataSearchCancel.addEventListener("click", () => {
+    el.dataSearchOverlay.open = false;
+  });
+
+  el.dataSettingsCancel.addEventListener("click", () => {
+    el.dataSettingsOverlay.open = false;
+  });
+
+  el.dataHeaderSearch.addEventListener("click", () => {
+    el.dataSearchOverlay.open = true;
+    el.dataSearchTitle.focus();
+  });
+
+  el.dataHeaderSettings.addEventListener("click", () => {
+    el.dataSettingsOverlay.open = true;
+  });
+
+  el.dataListClose.addEventListener("click", () => {
+    el.dataListActive.open = false;
+  });
+
+  el.dataListBtn.addEventListener("click", () => {
+    const fragment = starting; //document.createDocumentFragment();
+
+    for (const { author, id, image, title } of matches.slice(
+      page * BOOKS_PER_PAGE,
+      (page + 1) * BOOKS_PER_PAGE
+    )) {
+      const element = document.createElement("button");
+      element.classList = "preview";
+      element.setAttribute("data-preview", id);
+
+      element.innerHTML = `
+              <img
+                  class="preview__image"
+                  src="${image}"
+              />
+              
+              <div class="preview__info">
+                  <h3 class="preview__title">${title}</h3>
+                  <div class="preview__author">${authors[author]}</div>
+              </div>
+          `;
+
+      fragment.appendChild(element);
+    }
+
+    el.dataListItems.appendChild(fragment);
+    page += 1;
+  });
+}
