@@ -5,8 +5,7 @@ let matches = books;
 
 const starting = document.createDocumentFragment();
 
-///**@typedef {object} - contains all the querySelectors throughout the JS file  */
-
+//ELEMENTS OBJECT TO RETAIN ALL QUERY SELECTORS FOR REUSABILITY
 const el = {
   dataSettingsTheme: document.querySelector("[data-settings-theme]"),
   dataListBtn: document.querySelector("[data-list-button]"),
@@ -32,6 +31,7 @@ const el = {
   dataListMessage: document.querySelector("[data-list-message]"),
 };
 
+//CALL EVENTLISTENERS FUNCTION
 eventListeners();
 
 for (const { author, id, image, title } of matches.slice(0, BOOKS_PER_PAGE)) {
@@ -86,18 +86,7 @@ for (const [id, name] of Object.entries(authors)) {
 
 el.dataSearchAuthors.appendChild(authorsHtml);
 
-if (
-  window.matchMedia &&
-  window.matchMedia("(prefers-color-scheme: dark)").matches
-) {
-  el.dataSettingsTheme.value = "night";
-  document.documentElement.style.setProperty("--color-dark", "255, 255, 255");
-  document.documentElement.style.setProperty("--color-light", "10, 10, 20");
-} else {
-  el.dataSettingsTheme.value = "day";
-  document.documentElement.style.setProperty("--color-dark", "10, 10, 20");
-  document.documentElement.style.setProperty("--color-light", "255, 255, 255");
-}
+setTheme();
 
 el.dataListBtn.innerText = `Show more (${books.length - BOOKS_PER_PAGE})`;
 el.dataListBtn.disabled = matches.length - page * BOOKS_PER_PAGE > 0;
@@ -113,19 +102,8 @@ el.dataListBtn.innerHTML = `
 
 el.dataSettingsForm.addEventListener("submit", (event) => {
   event.preventDefault();
-  const formData = new FormData(event.target);
-  const { theme } = Object.fromEntries(formData);
 
-  if (theme === "night") {
-    document.documentElement.style.setProperty("--color-dark", "255, 255, 255");
-    document.documentElement.style.setProperty("--color-light", "10, 10, 20");
-  } else {
-    document.documentElement.style.setProperty("--color-dark", "10, 10, 20");
-    document.documentElement.style.setProperty(
-      "--color-light",
-      "255, 255, 255"
-    );
-  }
+  toggleTheme(event);
 
   el.dataSettingsOverlay.open = false;
 });
@@ -186,6 +164,40 @@ el.dataSearchForm.addEventListener("submit", (event) => {
   window.scrollTo({ top: 0, behavior: "smooth" });
   el.dataSearchOverlay.open = false;
 });
+
+function setTheme() {
+  if (
+    window.matchMedia &&
+    window.matchMedia("(prefers-color-scheme: dark)").matches
+  ) {
+    el.dataSettingsTheme.value = "night";
+    document.documentElement.style.setProperty("--color-dark", "255, 255, 255");
+    document.documentElement.style.setProperty("--color-light", "10, 10, 20");
+  } else {
+    el.dataSettingsTheme.value = "day";
+    document.documentElement.style.setProperty("--color-dark", "10, 10, 20");
+    document.documentElement.style.setProperty(
+      "--color-light",
+      "255, 255, 255"
+    );
+  }
+}
+
+function toggleTheme(event) {
+  const formData = new FormData(event.target);
+  const { theme } = Object.fromEntries(formData);
+
+  if (theme === "night") {
+    document.documentElement.style.setProperty("--color-dark", "255, 255, 255");
+    document.documentElement.style.setProperty("--color-light", "10, 10, 20");
+  } else {
+    document.documentElement.style.setProperty("--color-dark", "10, 10, 20");
+    document.documentElement.style.setProperty(
+      "--color-light",
+      "255, 255, 255"
+    );
+  }
+}
 
 function createPreview() {
   const element = document.createElement("button");
