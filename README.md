@@ -37,3 +37,7 @@ After completing the tasks, prepare a brief presentation for your coaching group
 Submit the refactored version of the "Book Connect" application, including all HTML, CSS, and JavaScript files. Ensure that your code is well-documented and adheres to the specified Styleguides. Include a written report covering the discussion and reflection points outlined above.
 
 Make sure to submit your project to the LMS on the DJS03 Project Tab.
+
+## FIND MY EXPLANATION VIDEO BELOW:
+
+https://drive.google.com/file/d/1p8aTs0icEppBjV90t7k73Gagortq1pCh/view?usp=drive_link
