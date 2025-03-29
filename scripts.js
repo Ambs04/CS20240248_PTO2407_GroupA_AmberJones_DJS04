@@ -5,6 +5,31 @@ let matches = books;
 
 const starting = document.createDocumentFragment();
 
+/**@typedef {object} - contains all the querySelectors throughout the JS file  */
+
+const el = {
+  dataSettingsTheme: document.querySelector("[data-setitngs-theme]"),
+  dataListBtn: document.querySelector("[data-list-button]"),
+  dataSearchCancel: document.querySelector("[data-search-cancel]"),
+  dataSearchOverlay: document.querySelector("[data-search-overlay]"),
+  dataSettingsOverlay: document.querySelector("[data-settings-overlay]"),
+  dataSettingsCancel: document.querySelector("[data-settings-cancel]"),
+  dataHeaderSearch: document.querySelector("[data-header-search]"),
+  dataHeaderSettings: document.querySelector("[data-header-settings]"),
+  dataListClose: document.querySelector("[data-list-close]"),
+  dataListItems: document.querySelector("[data-list-items]"),
+  dataSearchGenres: document.querySelector("[data-search-genres]"),
+  dataSearchAuthors: document.querySelector("[data-search-authors]"),
+  dataSearchTitle: document.querySelector("[data-search-title]"),
+  dataListActive: document.querySelector("[data-list-active]"),
+  dataListBlur: document.querySelector("[data-list-blur]"),
+  dataListImg: document.querySelector("[data-list-image]"),
+  dataListTitle: document.querySelector("[data-list-title]"),
+  dataListSubtitle: document.querySelector("[data-list-subtitle]"),
+  dataListDesc: document.querySelector("[data-list-description]"),
+  dataListMessage: document.querySelector("[data-list-message]"),
+};
+
 for (const { author, id, image, title } of matches.slice(0, BOOKS_PER_PAGE)) {
   const element = document.createElement("button");
   element.classList = "preview";
