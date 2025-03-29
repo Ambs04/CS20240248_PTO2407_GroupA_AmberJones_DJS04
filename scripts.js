@@ -106,6 +106,7 @@ searchForm();
 
 //FUNCTIONS
 
+//Responsible for the search form
 function settingsForm() {
   el.dataSettingsForm.addEventListener("submit", (event) => {
     event.preventDefault();
@@ -116,6 +117,7 @@ function settingsForm() {
   });
 }
 
+//Responsible for the search form
 function searchForm() {
   el.dataSearchForm.addEventListener("submit", (event) => {
     event.preventDefault();
@@ -194,6 +196,7 @@ function searchForm() {
   });
 }
 
+//Responsible for setting the theme
 function setTheme() {
   if (
     window.matchMedia &&
@@ -212,6 +215,7 @@ function setTheme() {
   }
 }
 
+//Responsible for theme toggle
 function toggleTheme(event) {
   const formData = new FormData(event.target);
   const { theme } = Object.fromEntries(formData);
@@ -228,7 +232,7 @@ function toggleTheme(event) {
   }
 }
 
-//FUNCTION CONTAINING ALL 'CLICK' EVEN LISTENERS
+//FUNCTION CONTAINING ALL 'CLICK' EVENT LISTENERS
 
 function eventListeners() {
   el.dataSearchCancel.addEventListener("click", () => {
