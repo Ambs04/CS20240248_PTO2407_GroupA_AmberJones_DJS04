@@ -5,13 +5,6 @@ let matches = books;
 
 const starting = document.createDocumentFragment();
 
-function darkProperty() {
-  document.documentElement.style.setProperty("--color-dark", "255, 255, 255");
-}
-function lightProperty() {
-  document.documentElement.style.setProperty("--color-light", "10, 10, 20");
-}
-
 ///**@typedef {object} - contains all the querySelectors throughout the JS file  */
 
 const el = {
@@ -98,12 +91,12 @@ if (
   window.matchMedia("(prefers-color-scheme: dark)").matches
 ) {
   el.dataSettingsTheme.value = "night";
-  darkProperty(); //document.documentElement.style.setProperty("--color-dark", "255, 255, 255");
-  lightProperty(); //document.documentElement.style.setProperty("--color-light", "10, 10, 20");
+  document.documentElement.style.setProperty("--color-dark", "255, 255, 255");
+  document.documentElement.style.setProperty("--color-light", "10, 10, 20");
 } else {
   el.dataSettingsTheme.value = "day";
-  darkProperty(); //document.documentElement.style.setProperty("--color-dark", "10, 10, 20");
-  lightProperty(); //document.documentElement.style.setProperty("--color-light", "255, 255, 255");
+  document.documentElement.style.setProperty("--color-dark", "10, 10, 20");
+  document.documentElement.style.setProperty("--color-light", "255, 255, 255");
 }
 
 el.dataListBtn.innerText = `Show more (${books.length - BOOKS_PER_PAGE})`;
@@ -124,11 +117,14 @@ el.dataSettingsForm.addEventListener("submit", (event) => {
   const { theme } = Object.fromEntries(formData);
 
   if (theme === "night") {
-    darkProperty(); //document.documentElement.style.setProperty( "--color-dark", "255, 255, 255");
-    lightProperty(); //document.documentElement.style.setProperty("--color-light", "10, 10, 20");
+    document.documentElement.style.setProperty("--color-dark", "255, 255, 255");
+    document.documentElement.style.setProperty("--color-light", "10, 10, 20");
   } else {
-    darkProperty(); //document.documentElement.style.setProperty("--color-dark", "10, 10, 20");
-    lightProperty(); //document.documentElement.style.setProperty("--color-light","255, 255, 255");
+    document.documentElement.style.setProperty("--color-dark", "10, 10, 20");
+    document.documentElement.style.setProperty(
+      "--color-light",
+      "255, 255, 255"
+    );
   }
 
   el.dataSettingsOverlay.open = false;
@@ -173,25 +169,8 @@ el.dataSearchForm.addEventListener("submit", (event) => {
   const newItems = starting; //document.createDocumentFragment();
 
   for (const { author, id, image, title } of result.slice(0, BOOKS_PER_PAGE)) {
-    const element = document.createElement("button");
-    element.classList = "preview";
-    element.setAttribute("data-preview", id);
-
-    element.innerHTML = `
-            <img
-                class="preview__image"
-                src="${image}"
-            />
-            
-            <div class="preview__info">
-                <h3 class="preview__title">${title}</h3>
-                <div class="preview__author">${authors[author]}</div>
-            </div>
-        `;
-
-    newItems.appendChild(element);
+    createPreview();
   }
-
   el.dataListItems.appendChild(newItems);
   el.dataListBtn.disabled = matches.length - page * BOOKS_PER_PAGE < 1;
 
@@ -207,6 +186,26 @@ el.dataSearchForm.addEventListener("submit", (event) => {
   window.scrollTo({ top: 0, behavior: "smooth" });
   el.dataSearchOverlay.open = false;
 });
+
+function createPreview() {
+  const element = document.createElement("button");
+  element.classList = "preview";
+  element.setAttribute("data-preview", id);
+
+  element.innerHTML = `
+            <img
+                class="preview__image"
+                src="${image}"
+            />
+            
+            <div class="preview__info">
+                <h3 class="preview__title">${title}</h3>
+                <div class="preview__author">${authors[author]}</div>
+            </div>
+        `;
+
+  newItems.appendChild(element);
+}
 
 //function containing event listeners
 
