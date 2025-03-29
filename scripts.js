@@ -100,58 +100,70 @@ el.dataListBtn.innerHTML = `
     })</span>
 `;
 
-el.dataSettingsForm.addEventListener("submit", (event) => {
-  event.preventDefault();
+settingsForm();
 
-  toggleTheme(event);
+searchForm();
 
-  el.dataSettingsOverlay.open = false;
-});
+//FUNCTIONS
 
-el.dataSearchForm.addEventListener("submit", (event) => {
-  event.preventDefault();
-  const formData = new FormData(event.target);
-  const filters = Object.fromEntries(formData);
-  const result = [];
+function settingsForm() {
+  el.dataSettingsForm.addEventListener("submit", (event) => {
+    event.preventDefault();
 
-  for (const book of books) {
-    let genreMatch = filters.genre === "any";
+    toggleTheme(event);
 
-    for (const singleGenre of book.genres) {
-      if (genreMatch) break;
-      if (singleGenre === filters.genre) {
-        genreMatch = true;
+    el.dataSettingsOverlay.open = false;
+  });
+}
+
+function searchForm() {
+  el.dataSearchForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const filters = Object.fromEntries(formData);
+    const result = [];
+
+    for (const book of books) {
+      let genreMatch = filters.genre === "any";
+
+      for (const singleGenre of book.genres) {
+        if (genreMatch) break;
+        if (singleGenre === filters.genre) {
+          genreMatch = true;
+        }
+      }
+
+      if (
+        (filters.title.trim() === "" ||
+          book.title.toLowerCase().includes(filters.title.toLowerCase())) &&
+        (filters.author === "any" || book.author === filters.author) &&
+        genreMatch
+      ) {
+        result.push(book);
       }
     }
 
-    if (
-      (filters.title.trim() === "" ||
-        book.title.toLowerCase().includes(filters.title.toLowerCase())) &&
-      (filters.author === "any" || book.author === filters.author) &&
-      genreMatch
-    ) {
-      result.push(book);
+    page = 1;
+    matches = result;
+
+    if (result.length < 1) {
+      el.dataListMessage.classList.add("list__message_show");
+    } else {
+      el.dataListMessage.classList.remove("list__message_show");
     }
-  }
 
-  page = 1;
-  matches = result;
+    el.dataListItems.innerHTML = "";
+    const newItems = starting; //document.createDocumentFragment();
 
-  if (result.length < 1) {
-    el.dataListMessage.classList.add("list__message_show");
-  } else {
-    el.dataListMessage.classList.remove("list__message_show");
-  }
+    for (const { author, id, image, title } of result.slice(
+      0,
+      BOOKS_PER_PAGE
+    )) {
+      const element = document.createElement("button");
+      element.classList = "preview";
+      element.setAttribute("data-preview", id);
 
-  el.dataListItems.innerHTML = "";
-  const newItems = starting; //document.createDocumentFragment();
-
-  for (const { author, id, image, title } of result.slice(0, BOOKS_PER_PAGE)) {
-    const element = document.createElement("button");
-    element.classList = "preview";
-    element.setAttribute("data-preview", id);
-
-    element.innerHTML = `
+      element.innerHTML = `
               <img
                   class="preview__image"
                   src="${image}"
@@ -163,12 +175,12 @@ el.dataSearchForm.addEventListener("submit", (event) => {
               </div>
           `;
 
-    newItems.appendChild(element);
-  }
-  el.dataListItems.appendChild(newItems);
-  el.dataListBtn.disabled = matches.length - page * BOOKS_PER_PAGE < 1;
+      newItems.appendChild(element);
+    }
+    el.dataListItems.appendChild(newItems);
+    el.dataListBtn.disabled = matches.length - page * BOOKS_PER_PAGE < 1;
 
-  el.dataListBtn.innerHTML = `
+    el.dataListBtn.innerHTML = `
         <span>Show more</span>
         <span class="list__remaining"> (${
           matches.length - page * BOOKS_PER_PAGE > 0
@@ -177,9 +189,10 @@ el.dataSearchForm.addEventListener("submit", (event) => {
         })</span>
     `;
 
-  window.scrollTo({ top: 0, behavior: "smooth" });
-  el.dataSearchOverlay.open = false;
-});
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    el.dataSearchOverlay.open = false;
+  });
+}
 
 function setTheme() {
   if (
@@ -215,7 +228,7 @@ function toggleTheme(event) {
   }
 }
 
-//function containing event listeners
+//FUNCTION CONTAINING ALL 'CLICK' EVEN LISTENERS
 
 function eventListeners() {
   el.dataSearchCancel.addEventListener("click", () => {
