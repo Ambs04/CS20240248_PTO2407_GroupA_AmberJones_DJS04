@@ -4,14 +4,13 @@ let page = 1;
 let matches = books;
 
 const starting = document.createDocumentFragment();
-const darkProperty = document.documentElement.style.setProperty(
-  "--color-dark",
-  "255, 255, 255"
-);
-const lightProperty = document.documentElement.style.setProperty(
-  "--color-light",
-  "10, 10, 20"
-);
+
+function darkProperty() {
+  document.documentElement.style.setProperty("--color-dark", "255, 255, 255");
+}
+function lightProperty() {
+  document.documentElement.style.setProperty("--color-light", "10, 10, 20");
+}
 
 ///**@typedef {object} - contains all the querySelectors throughout the JS file  */
 
@@ -99,12 +98,12 @@ if (
   window.matchMedia("(prefers-color-scheme: dark)").matches
 ) {
   el.dataSettingsTheme.value = "night";
-  darkProperty; //document.documentElement.style.setProperty("--color-dark", "255, 255, 255");
-  lightProperty; //document.documentElement.style.setProperty("--color-light", "10, 10, 20");
+  darkProperty(); //document.documentElement.style.setProperty("--color-dark", "255, 255, 255");
+  lightProperty(); //document.documentElement.style.setProperty("--color-light", "10, 10, 20");
 } else {
   el.dataSettingsTheme.value = "day";
-  lightProperty; //document.documentElement.style.setProperty("--color-dark", "10, 10, 20");
-  darkProperty; //document.documentElement.style.setProperty("--color-light", "255, 255, 255");
+  darkProperty(); //document.documentElement.style.setProperty("--color-dark", "10, 10, 20");
+  lightProperty(); //document.documentElement.style.setProperty("--color-light", "255, 255, 255");
 }
 
 el.dataListBtn.innerText = `Show more (${books.length - BOOKS_PER_PAGE})`;
@@ -119,22 +118,17 @@ el.dataListBtn.innerHTML = `
     })</span>
 `;
 
-// removed event listeners from here
-
 el.dataSettingsForm.addEventListener("submit", (event) => {
   event.preventDefault();
   const formData = new FormData(event.target);
   const { theme } = Object.fromEntries(formData);
 
   if (theme === "night") {
-    document.documentElement.style.setProperty("--color-dark", "255, 255, 255");
-    document.documentElement.style.setProperty("--color-light", "10, 10, 20");
+    darkProperty(); //document.documentElement.style.setProperty( "--color-dark", "255, 255, 255");
+    lightProperty(); //document.documentElement.style.setProperty("--color-light", "10, 10, 20");
   } else {
-    document.documentElement.style.setProperty("--color-dark", "10, 10, 20");
-    document.documentElement.style.setProperty(
-      "--color-light",
-      "255, 255, 255"
-    );
+    darkProperty(); //document.documentElement.style.setProperty("--color-dark", "10, 10, 20");
+    lightProperty(); //document.documentElement.style.setProperty("--color-light","255, 255, 255");
   }
 
   el.dataSettingsOverlay.open = false;
@@ -214,12 +208,7 @@ el.dataSearchForm.addEventListener("submit", (event) => {
   el.dataSearchOverlay.open = false;
 });
 
-// removed event listener from here with for loop
-
-//create object for the query selectors
-//create a function to isolate event listeners
-// document.fragment replace with starting
-// create function/variable for light and dark mode
+//function containing event listeners
 
 function eventListeners() {
   el.dataSearchCancel.addEventListener("click", () => {
