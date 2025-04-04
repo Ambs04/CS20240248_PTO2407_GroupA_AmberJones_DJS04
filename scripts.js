@@ -1,58 +1,33 @@
 import { books, authors, genres, BOOKS_PER_PAGE } from "./data.js";
+import { el } from "./DOMelements.js";
 
 let page = 1;
 let matches = books;
 
 const starting = document.createDocumentFragment();
 
-//ELEMENTS OBJECT TO RETAIN ALL QUERY SELECTORS FOR REUSABILITY
-const el = {
-  dataSettingsTheme: document.querySelector("[data-settings-theme]"),
-  dataListBtn: document.querySelector("[data-list-button]"),
-  dataSettingsForm: document.querySelector("[data-settings-form]"),
-  dataSearchCancel: document.querySelector("[data-search-cancel]"),
-  dataSearchOverlay: document.querySelector("[data-search-overlay]"),
-  dataSettingsOverlay: document.querySelector("[data-settings-overlay]"),
-  dataSettingsCancel: document.querySelector("[data-settings-cancel]"),
-  dataHeaderSearch: document.querySelector("[data-header-search]"),
-  dataHeaderSettings: document.querySelector("[data-header-settings]"),
-  dataListClose: document.querySelector("[data-list-close]"),
-  dataListItems: document.querySelector("[data-list-items]"),
-  dataSearchGenres: document.querySelector("[data-search-genres]"),
-  dataSearchAuthors: document.querySelector("[data-search-authors]"),
-  dataSearchForm: document.querySelector("[data-search-form]"),
-  dataSearchTitle: document.querySelector("[data-search-title]"),
-  dataListActive: document.querySelector("[data-list-active]"),
-  dataListBlur: document.querySelector("[data-list-blur]"),
-  dataListImg: document.querySelector("[data-list-image]"),
-  dataListTitle: document.querySelector("[data-list-title]"),
-  dataListSubtitle: document.querySelector("[data-list-subtitle]"),
-  dataListDesc: document.querySelector("[data-list-description]"),
-  dataListMessage: document.querySelector("[data-list-message]"),
-};
-
 //CALL EVENTLISTENERS FUNCTION
 eventListeners();
 
 for (const { author, id, image, title } of matches.slice(0, BOOKS_PER_PAGE)) {
+  //preview({ author, id, image, title });
   const element = document.createElement("button");
   element.classList = "preview";
   element.setAttribute("data-preview", id);
-
   element.innerHTML = `
-        <img
-            class="preview__image"
-            src="${image}"
-        />
-        
-        <div class="preview__info">
-            <h3 class="preview__title">${title}</h3>
-            <div class="preview__author">${authors[author]}</div>
-        </div>
-    `;
-
+      <img
+          class="preview__image"
+          src="${image}"
+      />
+      <div class="preview__info">
+          <h3 class="preview__title">${title}</h3>
+          <div class="preview__author">${authors[author]}</div>
+      </div>
+  `;
   starting.appendChild(element);
 }
+
+//createBookList(matches);
 
 el.dataListItems.appendChild(starting);
 
@@ -161,21 +136,20 @@ function searchForm() {
       0,
       BOOKS_PER_PAGE
     )) {
+      //preview({ author, id, image, title });
       const element = document.createElement("button");
       element.classList = "preview";
       element.setAttribute("data-preview", id);
-
       element.innerHTML = `
-              <img
-                  class="preview__image"
-                  src="${image}"
-              />
-              
-              <div class="preview__info">
-                  <h3 class="preview__title">${title}</h3>
-                  <div class="preview__author">${authors[author]}</div>
-              </div>
-          `;
+      <img
+          class="preview__image"
+          src="${image}"
+      />
+      <div class="preview__info">
+          <h3 class="preview__title">${title}</h3>
+          <div class="preview__author">${authors[author]}</div>
+      </div>
+  `;
 
       newItems.appendChild(element);
     }
@@ -263,21 +237,20 @@ function eventListeners() {
       page * BOOKS_PER_PAGE,
       (page + 1) * BOOKS_PER_PAGE
     )) {
+      // preview({ author, id, image, title });
       const element = document.createElement("button");
       element.classList = "preview";
       element.setAttribute("data-preview", id);
-
       element.innerHTML = `
-              <img
-                  class="preview__image"
-                  src="${image}"
-              />
-              
-              <div class="preview__info">
-                  <h3 class="preview__title">${title}</h3>
-                  <div class="preview__author">${authors[author]}</div>
-              </div>
-          `;
+          <img
+              class="preview__image"
+              src="${image}"
+          />
+          <div class="preview__info">
+              <h3 class="preview__title">${title}</h3>
+              <div class="preview__author">${authors[author]}</div>
+          </div>
+      `;
 
       fragment.appendChild(element);
     }
@@ -317,3 +290,24 @@ function eventListeners() {
     }
   });
 }
+
+// function preview({ author, id, image, title }) {
+//   const element = document.createElement("button");
+//   element.classList = "preview";
+//   element.setAttribute("data-preview", id);
+
+//   element.innerHTML = `
+//               <img
+//                   class="preview__image"
+//                   src="${image}"
+//               />
+
+//               <div class="preview__info">
+//                   <h3 class="preview__title">${title}</h3>
+//                   <div class="preview__author">${authors[author]}</div>
+//               </div>
+//           `;
+//   return element;
+// }
+
+//preview({ author, id, image, title });
