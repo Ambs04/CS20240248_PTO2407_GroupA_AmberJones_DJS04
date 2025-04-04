@@ -16,49 +16,59 @@ for (const { author, id, image, title } of matches.slice(0, BOOKS_PER_PAGE)) {
 
 el.dataListItems.appendChild(starting);
 
-const genreHtml = starting; //document.createDocumentFragment();
-const firstGenreElement = document.createElement("option");
-firstGenreElement.value = "any";
-firstGenreElement.innerText = "All Genres";
-genreHtml.appendChild(firstGenreElement);
+function filterGenres() {
+  const genreHtml = starting; //document.createDocumentFragment();
+  const firstGenreElement = document.createElement("option");
+  firstGenreElement.value = "any";
+  firstGenreElement.innerText = "All Genres";
+  genreHtml.appendChild(firstGenreElement);
 
-for (const [id, name] of Object.entries(genres)) {
-  const element = document.createElement("option");
-  element.value = id;
-  element.innerText = name;
-  genreHtml.appendChild(element);
+  for (const [id, name] of Object.entries(genres)) {
+    const element = document.createElement("option");
+    element.value = id;
+    element.innerText = name;
+    genreHtml.appendChild(element);
+  }
+  el.dataSearchGenres.appendChild(genreHtml);
 }
 
-el.dataSearchGenres.appendChild(genreHtml);
+filterGenres();
 
-const authorsHtml = starting; //document.createDocumentFragment();
-const firstAuthorElement = document.createElement("option");
-firstAuthorElement.value = "any";
-firstAuthorElement.innerText = "All Authors";
-authorsHtml.appendChild(firstAuthorElement);
+function filterAuthors() {
+  const authorsHtml = starting; //document.createDocumentFragment();
+  const firstAuthorElement = document.createElement("option");
+  firstAuthorElement.value = "any";
+  firstAuthorElement.innerText = "All Authors";
+  authorsHtml.appendChild(firstAuthorElement);
 
-for (const [id, name] of Object.entries(authors)) {
-  const element = document.createElement("option");
-  element.value = id;
-  element.innerText = name;
-  authorsHtml.appendChild(element);
+  for (const [id, name] of Object.entries(authors)) {
+    const element = document.createElement("option");
+    element.value = id;
+    element.innerText = name;
+    authorsHtml.appendChild(element);
+  }
+  el.dataSearchAuthors.appendChild(authorsHtml);
 }
 
-el.dataSearchAuthors.appendChild(authorsHtml);
+filterAuthors();
 
 setTheme();
 
-el.dataListBtn.innerText = `Show more (${books.length - BOOKS_PER_PAGE})`;
-el.dataListBtn.disabled = matches.length - page * BOOKS_PER_PAGE > 0;
+function showMoreBtn() {
+  el.dataListBtn.innerText = `Show more (${books.length - BOOKS_PER_PAGE})`;
+  el.dataListBtn.disabled = matches.length - page * BOOKS_PER_PAGE > 0;
 
-el.dataListBtn.innerHTML = `
-    <span>Show more</span>
-    <span class="list__remaining"> (${
-      matches.length - page * BOOKS_PER_PAGE > 0
-        ? matches.length - page * BOOKS_PER_PAGE
-        : 0
-    })</span>
-`;
+  el.dataListBtn.innerHTML = `
+      <span>Show more</span>
+      <span class="list__remaining"> (${
+        matches.length - page * BOOKS_PER_PAGE > 0
+          ? matches.length - page * BOOKS_PER_PAGE
+          : 0
+      })</span>
+  `;
+}
+
+showMoreBtn();
 
 settingsForm();
 
@@ -200,6 +210,7 @@ function eventListeners() {
     el.dataListActive.open = false;
   });
 }
+
 el.dataListBtn.addEventListener("click", () => {
   const fragment = starting; //document.createDocumentFragment();
 
