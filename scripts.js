@@ -1,5 +1,6 @@
 import { books, authors, genres, BOOKS_PER_PAGE } from "./data.js";
 import { el } from "./DOMelements.js";
+import { bookPreview } from "./helperFunctions.js";
 
 let page = 1;
 let matches = books;
@@ -64,6 +65,42 @@ settingsForm();
 searchForm();
 
 //FUNCTIONS
+
+//Responsible for setting the theme
+function setTheme() {
+  if (
+    window.matchMedia &&
+    window.matchMedia("(prefers-color-scheme: dark)").matches
+  ) {
+    el.dataSettingsTheme.value = "night";
+    document.documentElement.style.setProperty("--color-dark", "255, 255, 255");
+    document.documentElement.style.setProperty("--color-light", "10, 10, 20");
+  } else {
+    el.dataSettingsTheme.value = "day";
+    document.documentElement.style.setProperty("--color-dark", "10, 10, 20");
+    document.documentElement.style.setProperty(
+      "--color-light",
+      "255, 255, 255"
+    );
+  }
+}
+
+//Responsible for theme toggle
+function toggleTheme(event) {
+  const formData = new FormData(event.target);
+  const { theme } = Object.fromEntries(formData);
+
+  if (theme === "night") {
+    document.documentElement.style.setProperty("--color-dark", "255, 255, 255");
+    document.documentElement.style.setProperty("--color-light", "10, 10, 20");
+  } else {
+    document.documentElement.style.setProperty("--color-dark", "10, 10, 20");
+    document.documentElement.style.setProperty(
+      "--color-light",
+      "255, 255, 255"
+    );
+  }
+}
 
 //Responsible for the search form
 function settingsForm() {
@@ -139,42 +176,6 @@ function searchForm() {
   });
 }
 
-//Responsible for setting the theme
-function setTheme() {
-  if (
-    window.matchMedia &&
-    window.matchMedia("(prefers-color-scheme: dark)").matches
-  ) {
-    el.dataSettingsTheme.value = "night";
-    document.documentElement.style.setProperty("--color-dark", "255, 255, 255");
-    document.documentElement.style.setProperty("--color-light", "10, 10, 20");
-  } else {
-    el.dataSettingsTheme.value = "day";
-    document.documentElement.style.setProperty("--color-dark", "10, 10, 20");
-    document.documentElement.style.setProperty(
-      "--color-light",
-      "255, 255, 255"
-    );
-  }
-}
-
-//Responsible for theme toggle
-function toggleTheme(event) {
-  const formData = new FormData(event.target);
-  const { theme } = Object.fromEntries(formData);
-
-  if (theme === "night") {
-    document.documentElement.style.setProperty("--color-dark", "255, 255, 255");
-    document.documentElement.style.setProperty("--color-light", "10, 10, 20");
-  } else {
-    document.documentElement.style.setProperty("--color-dark", "10, 10, 20");
-    document.documentElement.style.setProperty(
-      "--color-light",
-      "255, 255, 255"
-    );
-  }
-}
-
 //FUNCTION CONTAINING ALL 'CLICK' EVENT LISTENERS
 
 function eventListeners() {
@@ -198,71 +199,51 @@ function eventListeners() {
   el.dataListClose.addEventListener("click", () => {
     el.dataListActive.open = false;
   });
+}
+el.dataListBtn.addEventListener("click", () => {
+  const fragment = starting; //document.createDocumentFragment();
 
-  el.dataListBtn.addEventListener("click", () => {
-    const fragment = starting; //document.createDocumentFragment();
+  for (const { author, id, image, title } of matches.slice(
+    page * BOOKS_PER_PAGE,
+    (page + 1) * BOOKS_PER_PAGE
+  )) {
+    fragment.appendChild(bookPreview({ author, id, image, title }));
+  }
 
-    for (const { author, id, image, title } of matches.slice(
-      page * BOOKS_PER_PAGE,
-      (page + 1) * BOOKS_PER_PAGE
-    )) {
-      fragment.appendChild(bookPreview({ author, id, image, title }));
-    }
+  el.dataListItems.appendChild(fragment);
+  page += 1;
+});
 
-    el.dataListItems.appendChild(fragment);
-    page += 1;
-  });
+el.dataListItems.addEventListener("click", (event) => {
+  const pathArray = Array.from(event.path || event.composedPath());
+  let active = null;
 
-  el.dataListItems.addEventListener("click", (event) => {
-    const pathArray = Array.from(event.path || event.composedPath());
-    let active = null;
+  for (const node of pathArray) {
+    if (active) break;
 
-    for (const node of pathArray) {
-      if (active) break;
+    if (node?.dataset?.preview) {
+      let result = null;
 
-      if (node?.dataset?.preview) {
-        let result = null;
-
-        for (const singleBook of books) {
-          if (result) break;
-          if (singleBook.id === node?.dataset?.preview) result = singleBook;
-        }
-
-        active = result;
+      for (const singleBook of books) {
+        if (result) break;
+        if (singleBook.id === node?.dataset?.preview) result = singleBook;
       }
+
+      active = result;
     }
+  }
 
-    if (active) {
-      el.dataListActive.open = true;
-      el.dataListBlur.src = active.image;
-      el.dataListImg.src = active.image;
-      el.dataListTitle.innerText = active.title;
-      el.dataListSubtitle.innerText = `${authors[active.author]} (${new Date(
-        active.published
-      ).getFullYear()})`;
-      el.dataListDesc.innerText = active.description;
-    }
-  });
-}
-
-function bookPreview({ author, id, image, title }) {
-  const element = document.createElement("button");
-  element.classList = "preview";
-  element.setAttribute("data-preview", id);
-
-  element.innerHTML = `
-              <img
-                  class="preview__image"
-                  src="${image}"
-              />
-
-              <div class="preview__info">
-                  <h3 class="preview__title">${title}</h3>
-                  <div class="preview__author">${authors[author]}</div>
-              </div>
-          `;
-  return element;
-}
+  if (active) {
+    el.dataListActive.open = true;
+    el.dataListBlur.src = active.image;
+    el.dataListImg.src = active.image;
+    el.dataListTitle.innerText = active.title;
+    el.dataListSubtitle.innerText = `${authors[active.author]} (${new Date(
+      active.published
+    ).getFullYear()})`;
+    el.dataListDesc.innerText = active.description;
+  }
+});
 
 //preview({ author, id, image, title });
 
