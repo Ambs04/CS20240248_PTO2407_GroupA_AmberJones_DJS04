@@ -10,24 +10,8 @@ const starting = document.createDocumentFragment();
 eventListeners();
 
 for (const { author, id, image, title } of matches.slice(0, BOOKS_PER_PAGE)) {
-  //preview({ author, id, image, title });
-  const element = document.createElement("button");
-  element.classList = "preview";
-  element.setAttribute("data-preview", id);
-  element.innerHTML = `
-      <img
-          class="preview__image"
-          src="${image}"
-      />
-      <div class="preview__info">
-          <h3 class="preview__title">${title}</h3>
-          <div class="preview__author">${authors[author]}</div>
-      </div>
-  `;
-  starting.appendChild(element);
+  starting.appendChild(bookPreview({ author, id, image, title }));
 }
-
-//createBookList(matches);
 
 el.dataListItems.appendChild(starting);
 
@@ -136,22 +120,7 @@ function searchForm() {
       0,
       BOOKS_PER_PAGE
     )) {
-      //preview({ author, id, image, title });
-      const element = document.createElement("button");
-      element.classList = "preview";
-      element.setAttribute("data-preview", id);
-      element.innerHTML = `
-      <img
-          class="preview__image"
-          src="${image}"
-      />
-      <div class="preview__info">
-          <h3 class="preview__title">${title}</h3>
-          <div class="preview__author">${authors[author]}</div>
-      </div>
-  `;
-
-      newItems.appendChild(element);
+      newItems.appendChild(bookPreview({ author, id, image, title }));
     }
     el.dataListItems.appendChild(newItems);
     el.dataListBtn.disabled = matches.length - page * BOOKS_PER_PAGE < 1;
@@ -237,22 +206,7 @@ function eventListeners() {
       page * BOOKS_PER_PAGE,
       (page + 1) * BOOKS_PER_PAGE
     )) {
-      // preview({ author, id, image, title });
-      const element = document.createElement("button");
-      element.classList = "preview";
-      element.setAttribute("data-preview", id);
-      element.innerHTML = `
-          <img
-              class="preview__image"
-              src="${image}"
-          />
-          <div class="preview__info">
-              <h3 class="preview__title">${title}</h3>
-              <div class="preview__author">${authors[author]}</div>
-          </div>
-      `;
-
-      fragment.appendChild(element);
+      fragment.appendChild(bookPreview({ author, id, image, title }));
     }
 
     el.dataListItems.appendChild(fragment);
@@ -291,23 +245,27 @@ function eventListeners() {
   });
 }
 
-// function preview({ author, id, image, title }) {
-//   const element = document.createElement("button");
-//   element.classList = "preview";
-//   element.setAttribute("data-preview", id);
+function bookPreview({ author, id, image, title }) {
+  const element = document.createElement("button");
+  element.classList = "preview";
+  element.setAttribute("data-preview", id);
 
-//   element.innerHTML = `
-//               <img
-//                   class="preview__image"
-//                   src="${image}"
-//               />
+  element.innerHTML = `
+              <img
+                  class="preview__image"
+                  src="${image}"
+              />
 
-//               <div class="preview__info">
-//                   <h3 class="preview__title">${title}</h3>
-//                   <div class="preview__author">${authors[author]}</div>
-//               </div>
-//           `;
-//   return element;
-// }
+              <div class="preview__info">
+                  <h3 class="preview__title">${title}</h3>
+                  <div class="preview__author">${authors[author]}</div>
+              </div>
+          `;
+  return element;
+}
 
 //preview({ author, id, image, title });
+
+// function renderList() {
+
+// }
