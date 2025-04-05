@@ -1,59 +1,24 @@
 import { books, authors, genres, BOOKS_PER_PAGE } from "./data.js";
 import { el } from "./DOMelements.js";
-import { bookPreview } from "./helperFunctions.js";
+import {
+  bookPreview,
+  eventListeners,
+  filterGenres,
+  filterAuthors,
+} from "./helperFunctions.js";
 
 let page = 1;
 let matches = books;
 
 const starting = document.createDocumentFragment();
 
-//CALL EVENTLISTENERS FUNCTION
-eventListeners();
-showMoreBtnUpdate();
+init();
 
 for (const { author, id, image, title } of matches.slice(0, BOOKS_PER_PAGE)) {
   starting.appendChild(bookPreview({ author, id, image, title }));
 }
 
 el.dataListItems.appendChild(starting);
-
-function filterGenres() {
-  const genreHtml = starting; //document.createDocumentFragment();
-  const firstGenreElement = document.createElement("option");
-  firstGenreElement.value = "any";
-  firstGenreElement.innerText = "All Genres";
-  genreHtml.appendChild(firstGenreElement);
-
-  for (const [id, name] of Object.entries(genres)) {
-    const element = document.createElement("option");
-    element.value = id;
-    element.innerText = name;
-    genreHtml.appendChild(element);
-  }
-  el.dataSearchGenres.appendChild(genreHtml);
-}
-
-filterGenres();
-
-function filterAuthors() {
-  const authorsHtml = starting; //document.createDocumentFragment();
-  const firstAuthorElement = document.createElement("option");
-  firstAuthorElement.value = "any";
-  firstAuthorElement.innerText = "All Authors";
-  authorsHtml.appendChild(firstAuthorElement);
-
-  for (const [id, name] of Object.entries(authors)) {
-    const element = document.createElement("option");
-    element.value = id;
-    element.innerText = name;
-    authorsHtml.appendChild(element);
-  }
-  el.dataSearchAuthors.appendChild(authorsHtml);
-}
-
-filterAuthors();
-
-setTheme();
 
 function showMoreBtnUpdate() {
   el.dataListBtn.innerText = `Show more (${books.length - BOOKS_PER_PAGE})`;
@@ -70,10 +35,6 @@ function showMoreBtnUpdate() {
   `;
   el.dataListBtn.disabled = booksRemaining <= 0;
 }
-
-settingsForm();
-
-searchForm();
 
 //FUNCTIONS
 
@@ -171,35 +132,11 @@ function searchForm() {
       newItems.appendChild(bookPreview({ author, id, image, title }));
     }
     el.dataListItems.appendChild(newItems);
+
     showMoreBtnUpdate();
 
     window.scrollTo({ top: 0, behavior: "smooth" });
     el.dataSearchOverlay.open = false;
-  });
-}
-
-//FUNCTION CONTAINING ALL 'CLICK' EVENT LISTENERS
-
-function eventListeners() {
-  el.dataSearchCancel.addEventListener("click", () => {
-    el.dataSearchOverlay.open = false;
-  });
-
-  el.dataSettingsCancel.addEventListener("click", () => {
-    el.dataSettingsOverlay.open = false;
-  });
-
-  el.dataHeaderSearch.addEventListener("click", () => {
-    el.dataSearchOverlay.open = true;
-    el.dataSearchTitle.focus();
-  });
-
-  el.dataHeaderSettings.addEventListener("click", () => {
-    el.dataSettingsOverlay.open = true;
-  });
-
-  el.dataListClose.addEventListener("click", () => {
-    el.dataListActive.open = false;
   });
 }
 
@@ -248,8 +185,12 @@ el.dataListItems.addEventListener("click", (event) => {
   }
 });
 
-//preview({ author, id, image, title });
-
-// function renderList() {
-
-// }
+function init() {
+  eventListeners();
+  showMoreBtnUpdate();
+  filterGenres();
+  filterAuthors();
+  setTheme();
+  settingsForm();
+  searchForm();
+}
