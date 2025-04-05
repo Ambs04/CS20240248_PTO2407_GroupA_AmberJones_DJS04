@@ -54,9 +54,10 @@ filterAuthors();
 
 setTheme();
 
-function showMoreBtn() {
+function showMoreBtnUpdate() {
   el.dataListBtn.innerText = `Show more (${books.length - BOOKS_PER_PAGE})`;
-  el.dataListBtn.disabled = matches.length - page * BOOKS_PER_PAGE > 0;
+
+  const booksRemaining = matches.length - page * BOOKS_PER_PAGE;
 
   el.dataListBtn.innerHTML = `
       <span>Show more</span>
@@ -67,6 +68,8 @@ function showMoreBtn() {
       })</span>
   `;
 }
+
+el.dataListBtn.disabled = booksRemaining <= 0;
 
 showMoreBtn();
 
@@ -112,7 +115,7 @@ function toggleTheme(event) {
   }
 }
 
-//Responsible for the search form
+//Responsible for the settings form
 function settingsForm() {
   el.dataSettingsForm.addEventListener("submit", (event) => {
     event.preventDefault();
@@ -170,16 +173,17 @@ function searchForm() {
       newItems.appendChild(bookPreview({ author, id, image, title }));
     }
     el.dataListItems.appendChild(newItems);
+    showMoreBtnUpdate();
     el.dataListBtn.disabled = matches.length - page * BOOKS_PER_PAGE < 1;
 
-    el.dataListBtn.innerHTML = `
-        <span>Show more</span>
-        <span class="list__remaining"> (${
-          matches.length - page * BOOKS_PER_PAGE > 0
-            ? matches.length - page * BOOKS_PER_PAGE
-            : 0
-        })</span>
-    `;
+    // el.dataListBtn.innerHTML = `
+    //     <span>Show more</span>
+    //     <span class="list__remaining"> (${
+    //       matches.length - page * BOOKS_PER_PAGE > 0
+    //         ? matches.length - page * BOOKS_PER_PAGE
+    //         : 0
+    //     })</span>
+    // `;
 
     window.scrollTo({ top: 0, behavior: "smooth" });
     el.dataSearchOverlay.open = false;
