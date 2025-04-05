@@ -12,6 +12,42 @@ let matches = books;
 
 const starting = document.createDocumentFragment();
 
+class ManageTheme {
+  static setTheme(theme) {
+    if (theme === "night") {
+      document.documentElement.style.setProperty(
+        "--color-dark",
+        "255, 255, 255"
+      );
+      document.documentElement.style.setProperty("--color-light", "10, 10, 20");
+    } else {
+      document.documentElement.style.setProperty("--color-dark", "10, 10, 20");
+      document.documentElement.style.setProperty(
+        "--color-light",
+        "255, 255, 255"
+      );
+    }
+  }
+  static initTheme() {
+    if (
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches
+    ) {
+      el.dataSettingsTheme.value = "night";
+      ManageTheme.setTheme("night");
+    } else {
+      el.dataSettingsTheme.value = "day";
+      ManageTheme.setTheme("day");
+    }
+  }
+
+  static themeToggle(event) {
+    const formData = new FormData(event.target);
+    const { theme } = Object.fromEntries(formData);
+    ManageTheme.setTheme(theme);
+  }
+}
+
 init();
 
 for (const { author, id, image, title } of matches.slice(0, BOOKS_PER_PAGE)) {
@@ -38,62 +74,48 @@ function showMoreBtnUpdate() {
 
 //FUNCTIONS
 
-class ManageTheme {
-  static setTheme(theme) {
-    if (theme === "night") {
-      document.documentElement.style.setProperty(
-        "--color-dark",
-        "255, 255, 255"
-      );
-      document.documentElement.style.setProperty("--color-light", "10, 10, 20");
-    } else {
-      document.documentElement.style.setProperty("--color-dark", "10, 10, 20");
-      document.documentElement.style.setProperty(
-        "--color-light",
-        "255, 255, 255"
-      );
-    }
-  }
+//Responsible for setting the theme
+// function setTheme() {
+//   if (
+//     window.matchMedia &&
+//     window.matchMedia("(prefers-color-scheme: dark)").matches
+//   ) {
+//     el.dataSettingsTheme.value = "night";
+//     document.documentElement.style.setProperty("--color-dark", "255, 255, 255");
+//     document.documentElement.style.setProperty("--color-light", "10, 10, 20");
+//   } else {
+//     el.dataSettingsTheme.value = "day";
+//     document.documentElement.style.setProperty("--color-dark", "10, 10, 20");
+//     document.documentElement.style.setProperty(
+//       "--color-light",
+//       "255, 255, 255"
+//     );
+//   }
+// }
 
-  static themeInit() {
-    if (
-      window.matchMedia &&
-      window.matchMedia("(prefers-color-scheme: dark)").matches
-    ) {
-      el.dataSettingsTheme.value = "night";
-      ManageTheme.setTheme("night");
-      //document.documentElement.style.setProperty(
-      // "--color-dark",
-      // "255, 255, 255"
-      //);
-      // document.documentElement.style.setProperty("--color-light", "10, 10, 20");
-    } else {
-      el.dataSettingsTheme.value = "day";
-      ManageTheme.setTheme("day");
-      // document.documentElement.style.setProperty("--color-dark", "10, 10, 20");
-      // document.documentElement.style.setProperty(
-      //   "--color-light",
-      //   "255, 255, 255"
-      // );
-    }
-  }
+// //Responsible for theme toggle
+// function toggleTheme(event) {
+//   const formData = new FormData(event.target);
+//   const { theme } = Object.fromEntries(formData);
 
-  static toggleTheme(event) {
-    const formData = new FormData(event.target);
-    const { theme } = Object.fromEntries(formData);
-    ManageTheme.setTheme(theme);
-  }
-}
+//   if (theme === "night") {
+//     document.documentElement.style.setProperty("--color-dark", "255, 255, 255");
+//     document.documentElement.style.setProperty("--color-light", "10, 10, 20");
+//   } else {
+//     document.documentElement.style.setProperty("--color-dark", "10, 10, 20");
+//     document.documentElement.style.setProperty(
+//       "--color-light",
+//       "255, 255, 255"
+//     );
+//   }
+// }
 
 //Responsible for the settings form
 function settingsForm() {
   el.dataSettingsForm.addEventListener("submit", (event) => {
     event.preventDefault();
-    //ManageTheme.themeInit();
-    ManageTheme.toggleTheme(event);
-    //ManageTheme;
-    //toggleTheme(event);
-
+    //themeToggle(event);
+    ManageTheme.themeToggle(event);
     el.dataSettingsOverlay.open = false;
   });
 }
@@ -204,7 +226,8 @@ function init() {
   filterGenres();
   filterAuthors();
   //setTheme();
-  ManageTheme.themeInit();
+
   settingsForm();
   searchForm();
+  ManageTheme.initTheme();
 }
