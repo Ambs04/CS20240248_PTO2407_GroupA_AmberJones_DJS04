@@ -9,6 +9,7 @@ const starting = document.createDocumentFragment();
 
 //CALL EVENTLISTENERS FUNCTION
 eventListeners();
+showMoreBtnUpdate();
 
 for (const { author, id, image, title } of matches.slice(0, BOOKS_PER_PAGE)) {
   starting.appendChild(bookPreview({ author, id, image, title }));
