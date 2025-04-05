@@ -67,11 +67,8 @@ function showMoreBtnUpdate() {
           : 0
       })</span>
   `;
+  el.dataListBtn.disabled = booksRemaining <= 0;
 }
-
-el.dataListBtn.disabled = booksRemaining <= 0;
-
-showMoreBtn();
 
 settingsForm();
 
@@ -174,16 +171,6 @@ function searchForm() {
     }
     el.dataListItems.appendChild(newItems);
     showMoreBtnUpdate();
-    el.dataListBtn.disabled = matches.length - page * BOOKS_PER_PAGE < 1;
-
-    // el.dataListBtn.innerHTML = `
-    //     <span>Show more</span>
-    //     <span class="list__remaining"> (${
-    //       matches.length - page * BOOKS_PER_PAGE > 0
-    //         ? matches.length - page * BOOKS_PER_PAGE
-    //         : 0
-    //     })</span>
-    // `;
 
     window.scrollTo({ top: 0, behavior: "smooth" });
     el.dataSearchOverlay.open = false;
