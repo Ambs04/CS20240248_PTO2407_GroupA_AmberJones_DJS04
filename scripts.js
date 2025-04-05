@@ -38,39 +38,50 @@ function showMoreBtnUpdate() {
 
 //FUNCTIONS
 
-//Responsible for setting the theme
-function setTheme() {
-  if (
-    window.matchMedia &&
-    window.matchMedia("(prefers-color-scheme: dark)").matches
-  ) {
-    el.dataSettingsTheme.value = "night";
-    document.documentElement.style.setProperty("--color-dark", "255, 255, 255");
-    document.documentElement.style.setProperty("--color-light", "10, 10, 20");
-  } else {
-    el.dataSettingsTheme.value = "day";
-    document.documentElement.style.setProperty("--color-dark", "10, 10, 20");
-    document.documentElement.style.setProperty(
-      "--color-light",
-      "255, 255, 255"
-    );
+class ManageTheme {
+  static setTheme(theme) {
+    if (theme === "night") {
+      document.documentElement.style.setProperty(
+        "--color-dark",
+        "255, 255, 255"
+      );
+      document.documentElement.style.setProperty("--color-light", "10, 10, 20");
+    } else {
+      document.documentElement.style.setProperty("--color-dark", "10, 10, 20");
+      document.documentElement.style.setProperty(
+        "--color-light",
+        "255, 255, 255"
+      );
+    }
   }
-}
 
-//Responsible for theme toggle
-function toggleTheme(event) {
-  const formData = new FormData(event.target);
-  const { theme } = Object.fromEntries(formData);
+  static themeInit() {
+    if (
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches
+    ) {
+      el.dataSettingsTheme.value = "night";
+      ManageTheme.setTheme("night");
+      //document.documentElement.style.setProperty(
+      // "--color-dark",
+      // "255, 255, 255"
+      //);
+      // document.documentElement.style.setProperty("--color-light", "10, 10, 20");
+    } else {
+      el.dataSettingsTheme.value = "day";
+      ManageTheme.setTheme("day");
+      // document.documentElement.style.setProperty("--color-dark", "10, 10, 20");
+      // document.documentElement.style.setProperty(
+      //   "--color-light",
+      //   "255, 255, 255"
+      // );
+    }
+  }
 
-  if (theme === "night") {
-    document.documentElement.style.setProperty("--color-dark", "255, 255, 255");
-    document.documentElement.style.setProperty("--color-light", "10, 10, 20");
-  } else {
-    document.documentElement.style.setProperty("--color-dark", "10, 10, 20");
-    document.documentElement.style.setProperty(
-      "--color-light",
-      "255, 255, 255"
-    );
+  static toggleTheme(event) {
+    const formData = new FormData(event.target);
+    const { theme } = Object.fromEntries(formData);
+    ManageTheme.setTheme(theme);
   }
 }
 
@@ -78,8 +89,10 @@ function toggleTheme(event) {
 function settingsForm() {
   el.dataSettingsForm.addEventListener("submit", (event) => {
     event.preventDefault();
-
-    toggleTheme(event);
+    //ManageTheme.themeInit();
+    ManageTheme.toggleTheme(event);
+    //ManageTheme;
+    //toggleTheme(event);
 
     el.dataSettingsOverlay.open = false;
   });
@@ -190,7 +203,8 @@ function init() {
   showMoreBtnUpdate();
   filterGenres();
   filterAuthors();
-  setTheme();
+  //setTheme();
+  ManageTheme.themeInit();
   settingsForm();
   searchForm();
 }
