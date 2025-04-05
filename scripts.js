@@ -5,6 +5,7 @@ import {
   eventListeners,
   filterGenres,
   filterAuthors,
+  BookPreview,
 } from "./helperFunctions.js";
 
 let page = 1;
@@ -74,47 +75,11 @@ function showMoreBtnUpdate() {
 
 //FUNCTIONS
 
-//Responsible for setting the theme
-// function setTheme() {
-//   if (
-//     window.matchMedia &&
-//     window.matchMedia("(prefers-color-scheme: dark)").matches
-//   ) {
-//     el.dataSettingsTheme.value = "night";
-//     document.documentElement.style.setProperty("--color-dark", "255, 255, 255");
-//     document.documentElement.style.setProperty("--color-light", "10, 10, 20");
-//   } else {
-//     el.dataSettingsTheme.value = "day";
-//     document.documentElement.style.setProperty("--color-dark", "10, 10, 20");
-//     document.documentElement.style.setProperty(
-//       "--color-light",
-//       "255, 255, 255"
-//     );
-//   }
-// }
-
-// //Responsible for theme toggle
-// function toggleTheme(event) {
-//   const formData = new FormData(event.target);
-//   const { theme } = Object.fromEntries(formData);
-
-//   if (theme === "night") {
-//     document.documentElement.style.setProperty("--color-dark", "255, 255, 255");
-//     document.documentElement.style.setProperty("--color-light", "10, 10, 20");
-//   } else {
-//     document.documentElement.style.setProperty("--color-dark", "10, 10, 20");
-//     document.documentElement.style.setProperty(
-//       "--color-light",
-//       "255, 255, 255"
-//     );
-//   }
-// }
-
 //Responsible for the settings form
 function settingsForm() {
   el.dataSettingsForm.addEventListener("submit", (event) => {
     event.preventDefault();
-    //themeToggle(event);
+
     ManageTheme.themeToggle(event);
     el.dataSettingsOverlay.open = false;
   });
