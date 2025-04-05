@@ -5,7 +5,6 @@ import {
   eventListeners,
   filterGenres,
   filterAuthors,
-  BookPreview,
 } from "./helperFunctions.js";
 
 let page = 1;
