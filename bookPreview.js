@@ -1,3 +1,5 @@
+import { books, authors, genres, BOOKS_PER_PAGE } from "./data.js";
+
 export class BookPreview extends HTMLElement {
   constructor() {
     super();
