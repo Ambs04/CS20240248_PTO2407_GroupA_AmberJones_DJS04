@@ -40,4 +40,6 @@ Make sure to submit your project to the LMS on the DJS03 Project Tab.
 
 ## FIND MY EXPLANATION VIDEO BELOW:
 
+https://drive.google.com/file/d/1jwX8Mt2_Q_hFVl9gHcICXGNXzOvQ0ZtQ/view?usp=drive_link
+
 
