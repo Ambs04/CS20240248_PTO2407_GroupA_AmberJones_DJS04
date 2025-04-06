@@ -5,12 +5,14 @@ import {
   eventListeners,
   filterGenres,
   filterAuthors,
+  //BookPreview,
 } from "./helperFunctions.js";
 
 let page = 1;
 let matches = books;
 
 const starting = document.createDocumentFragment();
+//let previewEl = document.createElement("book-preview");
 
 class ManageTheme {
   static setTheme(theme) {
@@ -51,6 +53,8 @@ class ManageTheme {
 init();
 
 for (const { author, id, image, title } of matches.slice(0, BOOKS_PER_PAGE)) {
+  //preview();
+  //starting.appendChild(previewEl);
   starting.appendChild(bookPreview({ author, id, image, title }));
 }
 
@@ -128,6 +132,8 @@ function searchForm() {
       0,
       BOOKS_PER_PAGE
     )) {
+      //preview();
+      //newItems.appendChild(previewEl);
       newItems.appendChild(bookPreview({ author, id, image, title }));
     }
     el.dataListItems.appendChild(newItems);
@@ -146,6 +152,8 @@ el.dataListBtn.addEventListener("click", () => {
     page * BOOKS_PER_PAGE,
     (page + 1) * BOOKS_PER_PAGE
   )) {
+    //preview();
+    // fragment.appendChild(previewEl);
     fragment.appendChild(bookPreview({ author, id, image, title }));
   }
 
@@ -189,9 +197,17 @@ function init() {
   showMoreBtnUpdate();
   filterGenres();
   filterAuthors();
-  //setTheme();
-
   settingsForm();
   searchForm();
   ManageTheme.initTheme();
 }
+
+//console.log(preview());
+
+// function preview(book) {
+//   // let previewEl = document.createElement("book-preview");
+//   previewEl.setAttribute("author", book.author);
+//   previewEl.setAttribute("id", book.id);
+//   previewEl.setAttribute("image", book.image);
+//   previewEl.setAttribute("title", book.title);
+// }

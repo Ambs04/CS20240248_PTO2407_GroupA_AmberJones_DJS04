@@ -20,34 +20,34 @@ export function bookPreview({ author, id, image, title }) {
   return element;
 }
 
-// export class BookPreview extends HTMLElement {
-//   constructor() {}
+export class BookPreview extends HTMLElement {
+  constructor() {}
 
-//   static get attributes() {
-//     return ["author", "id", "image", "title"];
-//   }
+  static get attributes() {
+    return ["author", "id", "image", "title"];
+  }
 
-//   render() {
-//     const author = this.attributes("author") || "Author unknown";
-//     const id = this.attributes("id");
-//     const image = this.attributes("image") || "alt_image.jpg";
-//     const title = this.attributes("title") || "Title not found";
+  render() {
+    const author = this.attributes("author") || "Author unknown";
+    const id = this.attributes("id");
+    const image = this.attributes("image") || "alt_image.jpg";
+    const title = this.attributes("title") || "Title not found";
 
-//     this.innerHTML = `
-//                   <img
-//                       class="preview__image"
-//                       src="${image}"
-//                   />
+    this.innerHTML = `
+                  <img
+                      class="preview__image"
+                      src="${image}"
+                  />
 
-//                   <div class="preview__info">
-//                       <h3 class="preview__title">${title}</h3>
-//                       <div class="preview__author">${authors[author]}</div>
-//                   </div>
-//               `;
+                  <div class="preview__info">
+                      <h3 class="preview__title">${title}</h3>
+                      <div class="preview__author">${authors[author]}</div>
+                  </div>
+              `;
 
-//     customElements.define("book-preview", BookPreview);
-//   }
-// }
+    customElements.define("book-preview", BookPreview);
+  }
+}
 
 //FUNCTION CONTAINING ALL 'CLICK' EVENT LISTENERS
 
