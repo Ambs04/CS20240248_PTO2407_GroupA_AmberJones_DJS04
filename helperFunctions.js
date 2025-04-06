@@ -1,24 +1,24 @@
 import { authors, genres } from "./data.js";
 import { el } from "./DOMelements.js";
 
-export function bookPreview({ author, id, image, title }) {
-  const element = document.createElement("button");
-  element.classList = "preview";
-  element.setAttribute("data-preview", id);
+// export function bookPreview({ author, id, image, title }) {
+//   const element = document.createElement("button");
+//   element.classList = "preview";
+//   element.setAttribute("data-preview", id);
 
-  element.innerHTML = `
-                  <img
-                      class="preview__image"
-                      src="${image}"
-                  />
+//   element.innerHTML = `
+//                   <img
+//                       class="preview__image"
+//                       src="${image}"
+//                   />
 
-                  <div class="preview__info">
-                      <h3 class="preview__title">${title}</h3>
-                      <div class="preview__author">${authors[author]}</div>
-                  </div>
-              `;
-  return element;
-}
+//                   <div class="preview__info">
+//                       <h3 class="preview__title">${title}</h3>
+//                       <div class="preview__author">${authors[author]}</div>
+//                   </div>
+//               `;
+//   return element;
+// }
 
 //FUNCTION CONTAINING ALL 'CLICK' EVENT LISTENERS
 

@@ -2,7 +2,7 @@ import { BookPreview } from "./bookPreview.js";
 import { books, authors, genres, BOOKS_PER_PAGE } from "./data.js";
 import { el } from "./DOMelements.js";
 import {
-  bookPreview,
+  //bookPreview,
   eventListeners,
   filterGenres,
   filterAuthors,
