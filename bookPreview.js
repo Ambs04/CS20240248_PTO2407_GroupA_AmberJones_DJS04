@@ -1,4 +1,4 @@
-import { books, authors, genres, BOOKS_PER_PAGE } from "./data.js";
+import { authors } from "./data.js";
 
 export class BookPreview extends HTMLElement {
   constructor() {
@@ -15,9 +15,9 @@ export class BookPreview extends HTMLElement {
 
   render() {
     const author = this.getAttribute("author") || "Author unknown";
-    const id = getAttribute("id");
-    const image = getAttribute("image") || "alt_image.jpg";
-    const title = getAttribute("title") || "Title not found";
+    const id = this.getAttribute("id");
+    const image = this.getAttribute("image") || "alt_image.jpg";
+    const title = this.getAttribute("title") || "Title not found";
 
     this.innerHTML = `
                   <img

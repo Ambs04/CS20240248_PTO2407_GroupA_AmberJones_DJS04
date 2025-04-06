@@ -1,4 +1,4 @@
-import { books, authors, genres, BOOKS_PER_PAGE } from "./data.js";
+import { authors, genres } from "./data.js";
 import { el } from "./DOMelements.js";
 
 export function bookPreview({ author, id, image, title }) {

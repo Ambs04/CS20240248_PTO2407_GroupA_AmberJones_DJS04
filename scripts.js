@@ -1,4 +1,4 @@
-import { BookPreview } from "./bookPreview.js";
+//import { BookPreview } from "./bookPreview.js";
 import { books, authors, genres, BOOKS_PER_PAGE } from "./data.js";
 import { el } from "./DOMelements.js";
 import {
@@ -56,12 +56,12 @@ function displayInitBooks() {
   for (const { author, id, image, title } of matches.slice(0, BOOKS_PER_PAGE)) {
     //preview();
     // const previewEl = document.createElement("book-preview");
-    previewEl.setAttribute("author", author);
-    previewEl.setAttribute("id", id);
-    previewEl.setAttribute("image", image);
-    previewEl.setAttribute("title", title);
-    starting.appendChild(previewEl);
-    //starting.appendChild(bookPreview({ author, id, image, title }));
+    // previewEl.setAttribute("author", author);
+    // previewEl.setAttribute("id", id);
+    // previewEl.setAttribute("image", image);
+    // previewEl.setAttribute("title", title);
+    // starting.appendChild(previewEl);
+    starting.appendChild(bookPreview({ author, id, image, title }));
   }
 
   el.dataListItems.appendChild(starting);
@@ -142,12 +142,12 @@ function searchForm() {
     )) {
       //preview();
       //const previewEl = document.createElement("book-preview");
-      previewEl.setAttribute("author", author);
-      previewEl.setAttribute("id", id);
-      previewEl.setAttribute("image", image);
-      previewEl.setAttribute("title", title);
-      newItems.appendChild(previewEl);
-      //newItems.appendChild(bookPreview({ author, id, image, title }));
+      // previewEl.setAttribute("author", author);
+      // previewEl.setAttribute("id", id);
+      // previewEl.setAttribute("image", image);
+      // previewEl.setAttribute("title", title);
+      // newItems.appendChild(previewEl);
+      newItems.appendChild(bookPreview({ author, id, image, title }));
     }
     el.dataListItems.appendChild(newItems);
 
@@ -167,12 +167,12 @@ el.dataListBtn.addEventListener("click", () => {
   )) {
     //preview();
     //const previewEl = document.createElement("book-preview");
-    previewEl.setAttribute("author", author);
-    previewEl.setAttribute("id", id);
-    previewEl.setAttribute("image", image);
-    previewEl.setAttribute("title", title);
-    fragment.appendChild(previewEl);
-    //fragment.appendChild(bookPreview({ author, id, image, title }));
+    // previewEl.setAttribute("author", author);
+    // previewEl.setAttribute("id", id);
+    // previewEl.setAttribute("image", image);
+    // previewEl.setAttribute("title", title);
+    // fragment.appendChild(previewEl);
+    fragment.appendChild(bookPreview({ author, id, image, title }));
   }
 
   el.dataListItems.appendChild(fragment);
@@ -220,8 +220,6 @@ function init() {
   searchForm();
   ManageTheme.initTheme();
 }
-
-//console.log(preview());
 
 // function preview(book) {
 //   // let previewEl = document.createElement("book-preview");
