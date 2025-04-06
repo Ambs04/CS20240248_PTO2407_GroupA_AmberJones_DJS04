@@ -13,6 +13,7 @@ let matches = books;
 
 const starting = document.createDocumentFragment();
 
+//class that helps manage the theme of app
 class ManageTheme {
   static setTheme(theme) {
     if (theme === "night") {
@@ -49,8 +50,12 @@ class ManageTheme {
   }
 }
 
+//call init function
 init();
 
+//FUNCTIONS
+
+// function to display books
 function displayInitBooks() {
   for (const { author, id, image, title } of matches.slice(0, BOOKS_PER_PAGE)) {
     const previewEl = document.createElement("book-preview");
@@ -65,6 +70,7 @@ function displayInitBooks() {
   showMoreBtnUpdate();
 }
 
+//function that renders show more btn
 function showMoreBtnUpdate() {
   el.dataListBtn.innerText = `Show more (${books.length - BOOKS_PER_PAGE})`;
 
@@ -80,8 +86,6 @@ function showMoreBtnUpdate() {
   `;
   el.dataListBtn.disabled = booksRemaining <= 0;
 }
-
-//FUNCTIONS
 
 //Responsible for the settings form
 function settingsForm() {
@@ -205,6 +209,7 @@ el.dataListItems.addEventListener("click", (event) => {
   }
 });
 
+//function that calls all functions in one place
 function init() {
   eventListeners();
   displayInitBooks();
