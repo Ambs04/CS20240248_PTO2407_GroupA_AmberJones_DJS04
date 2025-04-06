@@ -12,7 +12,6 @@ let page = 1;
 let matches = books;
 
 const starting = document.createDocumentFragment();
-//const previewEl = document.createElement("book-preview");
 
 class ManageTheme {
   static setTheme(theme) {
@@ -60,8 +59,6 @@ function displayInitBooks() {
     previewEl.setAttribute("image", image);
     previewEl.setAttribute("title", title);
     starting.appendChild(previewEl);
-    // starting.innerHTML = previewEl;
-    // starting.appendChild(bookPreview({ author, id, image, title }));
   }
 
   el.dataListItems.appendChild(starting);
@@ -147,7 +144,6 @@ function searchForm() {
       previewEl.setAttribute("title", title);
 
       newItems.appendChild(previewEl);
-      //newItems.appendChild(bookPreview({ author, id, image, title }));
     }
     el.dataListItems.appendChild(newItems);
 
@@ -165,15 +161,13 @@ el.dataListBtn.addEventListener("click", () => {
     page * BOOKS_PER_PAGE,
     (page + 1) * BOOKS_PER_PAGE
   )) {
-    //preview();
     const previewEl = document.createElement("book-preview");
     previewEl.setAttribute("author", author);
     previewEl.setAttribute("id", id);
     previewEl.setAttribute("image", image);
     previewEl.setAttribute("title", title);
-    // fragment.innerHTML = previewEl;
+
     fragment.appendChild(previewEl);
-    //fragment.appendChild(bookPreview({ author, id, image, title }));
   }
 
   el.dataListItems.appendChild(fragment);
