@@ -116,6 +116,8 @@ export class BookPreview extends HTMLElement {
                     //     }
                     // }
 
+                    
+
                 </style>
                   <img
                       class="preview__image"
