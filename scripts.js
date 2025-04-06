@@ -52,18 +52,21 @@ class ManageTheme {
 
 init();
 
-for (const { author, id, image, title } of matches.slice(0, BOOKS_PER_PAGE)) {
-  //preview();
-  // const previewEl = document.createElement("book-preview");
-  // previewEl.setAttribute("author", author);
-  // previewEl.setAttribute("id", id);
-  // previewEl.setAttribute("image", image);
-  // previewEl.setAttribute("title", title);
-  // starting.appendChild(previewEl);
-  starting.appendChild(bookPreview({ author, id, image, title }));
-}
+function displayInitBooks() {
+  for (const { author, id, image, title } of matches.slice(0, BOOKS_PER_PAGE)) {
+    //preview();
+    // const previewEl = document.createElement("book-preview");
+    // previewEl.setAttribute("author", author);
+    // previewEl.setAttribute("id", id);
+    // previewEl.setAttribute("image", image);
+    // previewEl.setAttribute("title", title);
+    // starting.appendChild(previewEl);
+    starting.appendChild(bookPreview({ author, id, image, title }));
+  }
 
-el.dataListItems.appendChild(starting);
+  el.dataListItems.appendChild(starting);
+  showMoreBtnUpdate();
+}
 
 function showMoreBtnUpdate() {
   el.dataListBtn.innerText = `Show more (${books.length - BOOKS_PER_PAGE})`;
@@ -209,7 +212,8 @@ el.dataListItems.addEventListener("click", (event) => {
 
 function init() {
   eventListeners();
-  showMoreBtnUpdate();
+  displayInitBooks();
+  //showMoreBtnUpdate();
   filterGenres();
   filterAuthors();
   settingsForm();
