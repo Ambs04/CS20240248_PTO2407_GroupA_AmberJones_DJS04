@@ -54,16 +54,14 @@ init();
 
 function displayInitBooks() {
   for (const { author, id, image, title } of matches.slice(0, BOOKS_PER_PAGE)) {
-    //preview();
     const previewEl = document.createElement("book-preview");
     previewEl.setAttribute("author", author);
     previewEl.setAttribute("id", id);
     previewEl.setAttribute("image", image);
     previewEl.setAttribute("title", title);
-    // starting.appendChild(previewEl);
-    //starting.innerHTML = previewEl;
-
-    starting.appendChild(bookPreview({ author, id, image, title }));
+    starting.appendChild(previewEl);
+    // starting.innerHTML = previewEl;
+    // starting.appendChild(bookPreview({ author, id, image, title }));
   }
 
   el.dataListItems.appendChild(starting);
@@ -142,15 +140,14 @@ function searchForm() {
       0,
       BOOKS_PER_PAGE
     )) {
-      //preview();
-      // const previewEl = document.createElement("book-preview");
-      // previewEl.setAttribute("author", author);
-      // previewEl.setAttribute("id", id);
-      // previewEl.setAttribute("image", image);
-      // previewEl.setAttribute("title", title);
+      const previewEl = document.createElement("book-preview");
+      previewEl.setAttribute("author", author);
+      previewEl.setAttribute("id", id);
+      previewEl.setAttribute("image", image);
+      previewEl.setAttribute("title", title);
 
-      // newItems.appendChild(previewEl);
-      newItems.appendChild(bookPreview({ author, id, image, title }));
+      newItems.appendChild(previewEl);
+      //newItems.appendChild(bookPreview({ author, id, image, title }));
     }
     el.dataListItems.appendChild(newItems);
 
@@ -169,13 +166,14 @@ el.dataListBtn.addEventListener("click", () => {
     (page + 1) * BOOKS_PER_PAGE
   )) {
     //preview();
-    // const previewEl = document.createElement("book-preview");
-    // previewEl.setAttribute("author", author);
-    // previewEl.setAttribute("id", id);
-    // previewEl.setAttribute("image", image);
-    // previewEl.setAttribute("title", title);
-    // fragment.appendChild(previewEl);
-    fragment.appendChild(bookPreview({ author, id, image, title }));
+    const previewEl = document.createElement("book-preview");
+    previewEl.setAttribute("author", author);
+    previewEl.setAttribute("id", id);
+    previewEl.setAttribute("image", image);
+    previewEl.setAttribute("title", title);
+    // fragment.innerHTML = previewEl;
+    fragment.appendChild(previewEl);
+    //fragment.appendChild(bookPreview({ author, id, image, title }));
   }
 
   el.dataListItems.appendChild(fragment);
@@ -216,18 +214,10 @@ el.dataListItems.addEventListener("click", (event) => {
 function init() {
   eventListeners();
   displayInitBooks();
-  //showMoreBtnUpdate();
+  showMoreBtnUpdate();
   filterGenres();
   filterAuthors();
   settingsForm();
   searchForm();
   ManageTheme.initTheme();
 }
-
-// function preview(book) {
-//   // let previewEl = document.createElement("book-preview");
-//   previewEl.setAttribute("author", book.author);
-//   previewEl.setAttribute("id", book.id);
-//   previewEl.setAttribute("image", book.image);
-//   previewEl.setAttribute("title", book.title);
-// }
