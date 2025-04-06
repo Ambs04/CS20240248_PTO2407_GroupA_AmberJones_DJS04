@@ -1,3 +1,4 @@
+//import { BookPreview } from "./bookPreview.js";
 import { books, authors, genres, BOOKS_PER_PAGE } from "./data.js";
 import { el } from "./DOMelements.js";
 import {
@@ -5,7 +6,6 @@ import {
   eventListeners,
   filterGenres,
   filterAuthors,
-  //BookPreview,
 } from "./helperFunctions.js";
 
 let page = 1;
